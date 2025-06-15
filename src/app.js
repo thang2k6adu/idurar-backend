@@ -2,6 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+import { authRoutes } from '~/routes/auth'
+import { apiRoutes } from '~/routes/api'
+import { errorHandlers} from '~/middleware/errorHandlers'
 
 const app = express()
 
@@ -29,5 +32,11 @@ app.use(compression())
 app.get('/', (req, res) => {
   res.json({ message: 'ERP Backend API is running' })
 })
+app.use('/api/auth', authRoutes)
+// app.use('/api', apiRoutes)
+
+// Error handling
+app.use(errorHandlers.notFound)
+app.use(errorHandlers.productionError)
 
 export default app
