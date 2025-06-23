@@ -3,8 +3,8 @@ import mongoose from 'mongoose'
 import { verifyPassword } from '~/utils/password'
 import Joi from 'joi'
 import { hashPassword } from '~/utils/password'
-import { User } from '~/models/User'
-import { UserPassword } from '~/models/UserPassword'
+import { User } from '~/models/coreModels/Admin'
+import { UserPassword } from '~/models/coreModels/AdminPassword'
 
 const login = async (req, res) => {
   try {

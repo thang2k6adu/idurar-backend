@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import { env } from '~/config/environment'
-import { User } from '~/models/User'
-import { UserPassword } from '~/models/UserPassword'
+import { User } from '~/models/coreModels/Admin'
+import { UserPassword } from '~/models/coreModels/AdminPassword'
 
 export const isValidAuthToken = async (req, res, next) => {
   try {
