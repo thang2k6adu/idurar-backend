@@ -17,7 +17,8 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/server.js",
     "setup": "node src/setup/setup.js",
     "upgrade": "node src/setup/upgrade.js",
-    "reset": "node src/setup/reset.js"
+    "reset": "node src/setup/reset.js",
+    "test": "jest --config jest.config.mjs"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.6",
@@ -42,9 +43,11 @@
     "@babel/node": "^7.27.1",
     "@babel/plugin-transform-runtime": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
+    "babel-jest": "^30.0.2",
     "babel-plugin-module-resolver": "^5.0.2",
     "cross-env": "^7.0.3",
     "eslint": "^9.29.0",
+    "jest": "^30.0.2",
     "nodemon": "^3.0.1"
   }
 }
