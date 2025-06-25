@@ -13,6 +13,10 @@ const AdminPasswordSchema = new Schema({
     required: true,
     unique: true,
   },
+  password: {
+    type: String,
+    required: true
+  },
   emailToken: {
     type: String,
   },
