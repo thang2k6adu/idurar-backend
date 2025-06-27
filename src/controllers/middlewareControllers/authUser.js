@@ -10,7 +10,7 @@ export const authUser = async (
 
   if (!isMatch) {
     return res.status(403).json({
-      succes: false,
+      success: false,
       result: null,
       message: 'Invalid credentials',
     })
@@ -57,7 +57,7 @@ export const authUser = async (
     })
   } else {
     return res.status(403).json({
-      succes: false,
+      success: false,
       result: null,
       message: 'Invalid credentials',
     })
