@@ -2,7 +2,7 @@ import Joi from 'joi'
 import mongoose from 'mongoose'
 import { authUser } from './authUser'
 
-const login = async (req, res, { userModel }) => {
+export const login = async (req, res, { userModel }) => {
   const UserPasswordModel = mongoose.model(userModel + 'Password')
   const UserModel = mongoose.model(userModel)
 
@@ -17,7 +17,7 @@ const login = async (req, res, { userModel }) => {
     password: Joi.string().required(),
   })
 
-  const { error, value } = objectSchema.validate({ email, password })
+  const { error } = objectSchema.validate({ email, password })
   if (error) {
     return res.status(409).json({
       success: false,
@@ -56,6 +56,6 @@ const login = async (req, res, { userModel }) => {
     user,
     databasePassword,
     password,
-    UserPasswordModel
+    UserPasswordModel,
   })
 }
