@@ -1,2 +1,2 @@
-import createAuthMiddleware from '~/controllers/middlewareControllers/'
+import createAuthMiddleware from '~/controllers/middlewareControllers/createAuthMiddleware'
 export default createAuthMiddleware('Admin')
