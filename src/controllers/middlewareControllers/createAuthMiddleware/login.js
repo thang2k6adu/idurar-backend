@@ -1,6 +1,6 @@
 import Joi from 'joi'
 import mongoose from 'mongoose'
-import { authUser } from './authUser'
+import { authUser } from './createAuthMiddleware/authUser'
 
 export const login = async (req, res, { userModel }) => {
   const UserPasswordModel = mongoose.model(userModel + 'Password')

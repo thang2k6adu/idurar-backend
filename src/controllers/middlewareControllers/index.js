@@ -1,1 +1,0 @@
-import isValidAuthToken from './isValidAuthToken'

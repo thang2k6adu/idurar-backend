@@ -1,5 +1,5 @@
 import { login } from '~/controllers/middlewareControllers/login'
-import { authUser } from '~/controllers/middlewareControllers/authUser'
+import { authUser } from '~/controllers/middlewareControllers/createAuthMiddleware/authUser'
 import mongoose from 'mongoose'
 
 jest.mock('mongoose', () => ({
