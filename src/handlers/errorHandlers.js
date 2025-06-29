@@ -7,7 +7,7 @@
 
  */
 
-export const catchErrors = (fn) => {
+const catchErrors = (fn) => {
   //   Express tương thích với callback truyền thống (thời chưa có Promise), nên middleware function được định nghĩa như:
   // function(req, res, next) {
   //   // xử lý
@@ -43,7 +43,7 @@ export const catchErrors = (fn) => {
 
   If we hit a route that is not found, we mark it as 404 and pass it along to the next error handler to display
 */
-export const notFound = (req, res, next) => {
+const notFound = (req, res, next) => {
   return res.status(404).json({
     success: false,
     message: 'Api url does not exist ',
@@ -55,7 +55,7 @@ export const notFound = (req, res, next) => {
 
   In development we show good error messages so if we hit a syntax error or any other previously un-handled error, we can show good info on what happened
 */
-export const developmentErrors = (error, req, res, next) => {
+const developmentErrors = (error, req, res, next) => {
   error.stack = error.stack || ''
   const errorDetails = {
     message: error.message,
@@ -78,10 +78,17 @@ export const developmentErrors = (error, req, res, next) => {
 
   No stacktraces are leaked to admin
 */
-export const productionErrors = (error, req, res, next) => {
+const productionErrors = (error, req, res, next) => {
   return res.status(500).json({
     success: false,
     message: error.message,
     error: error,
   })
+}
+
+export const errorHandlers = {
+  catchErrors,
+  notFound,
+  developmentErrors,
+  productionErrors,
 }

@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 import { checkAndCorrectURL } from './checkAndCorrectURL'
 import { sendMail } from './sendMail'
 import shortid from 'shortid'
+import { AdminPassword } from '~/models/coreModels/AdminPassword'
+import { Admin } from '~/models/coreModels/Admin'
 
 // import { loadSettings } from '~/middlewares/settings'
 
@@ -22,7 +24,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
 
   const { error, value } = objectSchema.validate({ email })
   if (error) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       result: null,
       error: error,
@@ -57,7 +59,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
   }
 
   const settings = useAppSettings()
-  const idurar_app_email = settings.idurar_app_email
+  const idurar_app_mail = settings.idurar_app_mail
   const idurar_base_url = settings.idurar_base_url
 
   const url = checkAndCorrectURL(idurar_base_url)
@@ -68,7 +70,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
     name: user.name,
     link,
     subject: 'Reset your password | IDURAR',
-    idurar_app_email,
+    idurar_app_mail,
     type: 'passwordVerification',
   })
 
