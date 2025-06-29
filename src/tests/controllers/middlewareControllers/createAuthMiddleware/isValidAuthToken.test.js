@@ -1,4 +1,4 @@
-import isValidAuthToken from '~/controllers/middlewareControllers/isValidAuthToken'
+import { isValidAuthToken } from '~/controllers/middlewareControllers/createAuthMiddleware/isValidAuthToken'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 

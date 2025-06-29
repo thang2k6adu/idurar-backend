@@ -6,7 +6,7 @@ import shortid from 'shortid'
 
 // import { loadSettings } from '~/middlewares/settings'
 
-import { useAppSetting } from '~/settings'
+import { useAppSettings } from '~/settings'
 
 export const forgetPassword = async (req, res, { userModel }) => {
   const UserPasswordModel = mongoose.model(userModel + 'Password')
@@ -31,7 +31,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
     })
   }
 
-  const user = await UserModel.findOne({ email: email, removed: false })
+  const user = await UserModel.findOne({ email: email, removed: false }).exec()
 
   if (!user) {
     return res.status(404).json({
@@ -42,15 +42,23 @@ export const forgetPassword = async (req, res, { userModel }) => {
   }
 
   const resetToken = shortid.generate()
-  await UserPasswordModel.findOneAndUpdate(
+  const passwordRecord = await UserPasswordModel.findOneAndUpdate(
     { user: user._id },
     { $set: { resetToken: resetToken } },
     { new: true }
   ).exec()
 
+  if (!passwordRecord) {
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Failed to update password record',
+    })
+  }
+
   const settings = useAppSettings()
-  idurar_app_email = settings.idurar_app_email
-  idurar_base_url = settings.idurar_base_url
+  const idurar_app_email = settings.idurar_app_email
+  const idurar_base_url = settings.idurar_base_url
 
   const url = checkAndCorrectURL(idurar_base_url)
   const link = url + `/resetpassword/${user._id}/${resetToken}`
