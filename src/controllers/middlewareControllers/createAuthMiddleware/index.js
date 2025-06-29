@@ -8,9 +8,9 @@ const createAuthMiddleware = (userModel) => {
   let authMethods = {}
 
   authMethods.isValidAuthToken = (req, res, next) =>
-    isValidAuthToken(req, res, { userModel })
+    isValidAuthToken(req, res, next, { userModel })
 
-  authMethods.login = (req, res, next) => login(req, res, next, { userModel })
+  authMethods.login = (req, res) => login(req, res, { userModel })
 
   authMethods.logout = (req, res) => logout(req, res, { userModel })
 

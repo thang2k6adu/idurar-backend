@@ -1,4 +1,4 @@
-import { login } from '~/controllers/middlewareControllers/login'
+import { login } from '~/controllers/middlewareControllers/createAuthMiddleware/login'
 import { authUser } from '~/controllers/middlewareControllers/createAuthMiddleware/authUser'
 import mongoose from 'mongoose'
 
@@ -7,7 +7,7 @@ jest.mock('mongoose', () => ({
 }))
 
 // mock only work with module path
-jest.mock('~/controllers/middlewareControllers/authUser', () => ({
+jest.mock('~/controllers/middlewareControllers/createAuthMiddleware/authUser', () => ({
   authUser: jest.fn(),
 }))
 

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { logout } from '~/controllers/middlewareControllers/logout'
+import { logout } from '~/controllers/middlewareControllers/createAuthMiddleware/logout'
 
 jest.mock('mongoose', () => ({
   model: jest.fn(),
