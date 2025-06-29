@@ -1,4 +1,4 @@
-import { authUser } from '~/controllers/middlewareControllers/authUser'
+import { authUser } from '~/controllers/middlewareControllers/createAuthMiddleware/authUser'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 

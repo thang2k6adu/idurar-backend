@@ -9,7 +9,7 @@ import mongoose from 'mongoose'
  * @param {Function} next - Next middleware function
  * @param {Object} options - Options object chứa userModel và jwtSecret
  */
-const isValidAuthToken = async (
+export const isValidAuthToken = async (
   req,
   res,
   next,
@@ -100,5 +100,3 @@ const isValidAuthToken = async (
     })
   }
 }
-
-export default isValidAuthToken

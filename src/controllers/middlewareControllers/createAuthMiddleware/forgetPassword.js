@@ -32,10 +32,6 @@ export const forgetPassword = async (req, res, { userModel }) => {
   }
 
   const user = await UserModel.findOne({ email: email, removed: false })
-  const databasePassword = await UserPasswordModel.findOne({
-    user: user._id,
-    removed: false,
-  })
 
   if (!user) {
     return res.status(404).json({
