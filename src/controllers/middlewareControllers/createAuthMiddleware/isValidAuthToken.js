@@ -85,7 +85,7 @@ export const isValidAuthToken = async (
     } else {
       // Token hợp lệ, lưu tên model user vào request để sử dụng ở middleware tiếp theo
       const reqUserName = userModel.toLowerCase()
-      req.reqUserName = reqUserName
+      req[reqUserName] = user
       next() // Chuyển sang middleware tiếp theo
     }
   } catch (error) {

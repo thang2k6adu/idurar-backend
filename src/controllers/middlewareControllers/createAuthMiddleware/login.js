@@ -28,6 +28,7 @@ export const login = async (req, res, { userModel }) => {
     })
   }
 
+  // get user record with email
   const user = await UserModel.findOne({ email: email, removed: false })
 
   if (!user) {
@@ -38,6 +39,7 @@ export const login = async (req, res, { userModel }) => {
     })
   }
 
+  // check if user is enabled
   if (!user.enabled) {
     return res.status(409).json({
       success: false,
@@ -46,6 +48,7 @@ export const login = async (req, res, { userModel }) => {
     })
   }
 
+  // get database password record
   const databasePassword = await UserPasswordModel.findOne({
     user: user._id,
     removed: false,
