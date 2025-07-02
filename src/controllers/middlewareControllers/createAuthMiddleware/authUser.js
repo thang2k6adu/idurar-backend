@@ -1,3 +1,4 @@
+// This middlware is used for login user
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -6,6 +7,7 @@ export const authUser = async (
   res,
   { user, databasePassword, password, UserPasswordModel }
 ) => {
+  // compare password
   const isMatch = await bcrypt.compare(password, databasePassword.password)
 
   if (!isMatch) {
@@ -16,13 +18,16 @@ export const authUser = async (
     })
   }
 
+  // if true
   if (isMatch === true) {
+    // create token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: req.body.remember ? 365 * 24 + 'h' : '24h',
     })
 
     // find hay findOneAndUpdate không chạy ngay mà trả về Query Object (select(), exec())
     // exec sẽ chạy khi hàm được chạy với await, ở đây viết exec để rõ ràng hơn
+    // push token into loggedSessions
     await UserPasswordModel.findOneAndUpdate(
       { user: user._id },
       { $push: { loggedSessions: token } },

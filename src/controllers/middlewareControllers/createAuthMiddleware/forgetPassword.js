@@ -33,6 +33,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  // get user
   const user = await UserModel.findOne({ email: email, removed: false }).exec()
 
   if (!user) {
@@ -43,6 +44,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  // update resetToken
   const resetToken = shortid.generate()
   const passwordRecord = await UserPasswordModel.findOneAndUpdate(
     { user: user._id },
@@ -58,21 +60,23 @@ export const forgetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  // send mail
   const settings = useAppSettings()
   const idurar_app_mail = settings.idurar_app_mail
   const idurar_base_url = settings.idurar_base_url
 
   const url = checkAndCorrectURL(idurar_base_url)
+
   const link = url + `/resetpassword/${user._id}/${resetToken}`
 
   await sendMail({
     email,
     name: user.name,
     link,
-    subject: 'Reset your password | IDURAR',
     idurar_app_mail,
+    subject: 'Reset your password | IDURAR',
     type: 'passwordVerification',
-  })
+  } )
 
   return res.status(200).json({
     success: true,

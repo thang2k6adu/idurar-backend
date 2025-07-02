@@ -1,7 +1,7 @@
 import { emailVerification } from '~/emailTemplate/emailVerification'
 import { Resend } from 'resend'
 
-export const sendMail = async (
+export const sendMail = async ({
   email,
   name,
   link,
@@ -9,9 +9,10 @@ export const sendMail = async (
   subject = 'Verify your email | IDURAR',
   type = 'passwordVerification',
   emailToken
-) => {
+}) => {
   const resend = new Resend(process.env.RESEND_API)
 
+  console.log(idurar_app_mail)
   const { data } = await resend.emails.send({
     from: idurar_app_mail,
     to: email,

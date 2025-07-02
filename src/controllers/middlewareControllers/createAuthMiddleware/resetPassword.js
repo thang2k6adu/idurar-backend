@@ -31,6 +31,7 @@ export const resetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  //  get password and user record
   const databasePassword = await UserPasswordModel.findOne({
     user: userId,
     removed: false,
@@ -45,6 +46,7 @@ export const resetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  // check if user is enabled
   if (!user.enabled) {
     return res.status(409).json({
       success: false,
@@ -53,6 +55,7 @@ export const resetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  // check reset token
   const isMatch = resetToken == databasePassword.resetToken
   if (
     !isMatch ||
@@ -66,6 +69,7 @@ export const resetPassword = async (req, res, { userModel }) => {
     })
   }
 
+  // create password
   const hashedPassword = await bcrypt.hash(password, 10)
   const emailToken = shortid.generate()
   const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
