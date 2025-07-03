@@ -5,20 +5,32 @@ import mongoose from 'mongoose'
 import { sendMail } from '~/controllers/middlewareControllers/createAuthMiddleware/sendMail'
 
 // Mock dependencies
-jest.mock('mongoose', () => ({ model: jest.fn() }))
+jest.mock('mongoose', () => {
+  const actualMongoose = jest.requireActual('mongoose') // dùng bản gốc
+  return {
+    ...actualMongoose, // giữ nguyên Schema, Types, v.v.
+    model: jest.fn(), // chỉ mock model
+  }
+})
 jest.mock('shortid', () => ({ generate: jest.fn(() => 'mocked-token') }))
 jest.mock('~/settings', () => ({
   useAppSettings: jest.fn(() => ({
     idurar_app_email: 'noreply@idurar.com',
     idurar_base_url: 'idurar.com',
-  }))
+  })),
 }))
-jest.mock('~/controllers/middlewareControllers/createAuthMiddleware/checkAndCorrectURL', () => ({
-  checkAndCorrectURL: jest.fn(() => 'http://mocked-url.com'),
-}))
-jest.mock('~/controllers/middlewareControllers/createAuthMiddleware/sendMail', () => ({
-  sendMail: jest.fn(),
-}))
+jest.mock(
+  '~/controllers/middlewareControllers/createAuthMiddleware/checkAndCorrectURL',
+  () => ({
+    checkAndCorrectURL: jest.fn(() => 'http://mocked-url.com'),
+  })
+)
+jest.mock(
+  '~/controllers/middlewareControllers/createAuthMiddleware/sendMail',
+  () => ({
+    sendMail: jest.fn(),
+  })
+)
 
 // Mocks
 const mockFindOneExec = jest.fn()
@@ -36,8 +48,6 @@ beforeEach(() => {
   mongoose.model.mockImplementation((modelName) => {
     if (modelName === 'Admin') return mockUserModel
     if (modelName === 'AdminPassword') return mockPasswordModel
-    if (modelName === 'User') return mockUserModel // fallback for some test
-    if (modelName === 'UserPassword') return mockPasswordModel
     return null
   })
 })
@@ -105,7 +115,7 @@ describe('forgetPassword', () => {
         email: 'test@example.com',
         name: 'John Doe',
         link: expect.stringMatching(/resetpassword\/user123\/mocked-token/),
-        idurar_app_email: 'noreply@idurar.com',
+        idurar_app_mail: process.env.EMAIL_FROM,
         type: 'passwordVerification',
       })
     )

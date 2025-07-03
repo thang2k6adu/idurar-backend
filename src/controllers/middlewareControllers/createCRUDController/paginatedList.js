@@ -7,12 +7,12 @@ export const paginatedList = async (Model, req, res) => {
   const skip = page * limit - limit
 
   // GET /api/users?sortBy=name&sortValue=1&filter=role&equal=admin
-  // /search?q=thang&queryConditions=name,email
+  // /search?q=thang&fields=name,email
   const { sortBy = 'enabled', sortValue = -1, filter, equal } = req.query
   const sort = { [sortBy]: parseInt(sortValue) }
 
-  const fieldsArray = req.query.queryConditions
-    ? req.query.queryConditions.split(',')
+  const fieldsArray = req.query.fields
+    ? req.query.fields.split(',')
     : []
 
   let queryConditions = {}

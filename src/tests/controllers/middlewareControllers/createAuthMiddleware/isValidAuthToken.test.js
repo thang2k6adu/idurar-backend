@@ -131,7 +131,7 @@ describe('isValidAuthToken middleware (ESM)', () => {
 
     await isValidAuthToken(req, res, next, { userModel })
 
-    expect(req.reqUserName).toBe('admin')
+    expect(req[userModel.toLowerCase()]).toBe(mockUser)
     expect(next).toHaveBeenCalled()
   })
 })

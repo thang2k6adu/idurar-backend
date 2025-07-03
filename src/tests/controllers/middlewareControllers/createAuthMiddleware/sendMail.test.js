@@ -45,12 +45,12 @@ describe('sendMail', () => {
 
     mockSend.mockResolvedValue({ data: mockData })
 
-    const result = await sendMail(
-      'user@example.com',
-      'Test User',
-      'https://example.com/verify',
-      'noreply@idurarapp.com'
-    )
+    const result = await sendMail({
+      email: 'user@example.com',
+      name: 'Test User',
+      link: 'https://example.com/verify',
+      idurar_app_mail: 'noreply@idurarapp.com',
+    })
 
     expect(emailVerification).toHaveBeenCalledWith({
       name: 'Test User',
@@ -70,14 +70,14 @@ describe('sendMail', () => {
   it('should use custom subject and type if provided', async () => {
     mockSend.mockResolvedValue({ data: { id: 'custom-id' } })
 
-    await sendMail(
-      'custom@example.com',
-      'Custom Name',
-      'https://custom.com/reset',
-      'noreply@idurarapp.com',
-      'Reset your password',
-      'customType'
-    )
+    await sendMail({
+      email: 'custom@example.com',
+      name: 'Custom Name',
+      link: 'https://custom.com/reset',
+      idurar_app_mail: 'noreply@idurarapp.com',
+      subject: 'Reset your password',
+      type: 'customType',
+    })
 
     expect(mockSend).toHaveBeenCalledWith(
       expect.objectContaining({

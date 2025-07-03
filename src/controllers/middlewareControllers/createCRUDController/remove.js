@@ -7,7 +7,7 @@ export const remove = async (Model, req, res) => {
 
   // Find the document by id and soft delete it
   const result = await Model.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.params.id, removed: false },
     { $set: updates },
     { new: true }
   ).exec()

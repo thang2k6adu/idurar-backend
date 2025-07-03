@@ -11,7 +11,7 @@ export const update = async (Model, req, res) => {
     req.body,
     {
       new: true, // return the new document instead of the old one
-      runValidatiors: true, //run validators (model schema) on the update
+      runValidators: true, //run validators (model schema) on the update
     }
   )
 

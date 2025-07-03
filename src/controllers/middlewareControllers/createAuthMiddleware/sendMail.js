@@ -12,7 +12,6 @@ export const sendMail = async ({
 }) => {
   const resend = new Resend(process.env.RESEND_API)
 
-  console.log(idurar_app_mail)
   const { data } = await resend.emails.send({
     from: idurar_app_mail,
     to: email,
