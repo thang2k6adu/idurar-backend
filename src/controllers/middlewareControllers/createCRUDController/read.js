@@ -4,7 +4,7 @@ export const read = async (Model, req, res) => {
   const result = await Model.findOne({
     _id: req.params.id,
     removed: false,
-  })
+  }).exec()
 
   // if no result found, return document not found
   if (!result) {

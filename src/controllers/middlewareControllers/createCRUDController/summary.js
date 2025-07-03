@@ -3,11 +3,16 @@ export const summary = async (Model, req, res) => {
   const countAllDocumentsPromise = Model.countDocuments({
     removed: false,
   })
-  const countDocumentsByFilterPromise = Model.countDocuments({
-    removed: false,
-  })
-    .where(req.query.filter)
-    .equals(req.query.equal)
+
+  const { filter, equal } = req.query
+
+  let filterQuery = { removed: false }
+
+  if (filter && equal) {
+    filterQuery[filter] = equal
+  }
+
+  const countDocumentsByFilterPromise = Model.countDocuments(filterQuery)
 
   const [countAllDocuments, countDocumentsByFilter] = await Promise.all([
     countAllDocumentsPromise,

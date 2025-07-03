@@ -1,4 +1,8 @@
 //  find document with regex pattern based on different fields
+// escape special characters in regex, avoid regex injection
+const escapeRegex = (string) =>
+  string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
 export const search = async (Model, req, res) => {
   // console.log(req.query.fields)
   // if (req.query.q === undefined || req.query.q.trim() === '') {
@@ -25,7 +29,9 @@ export const search = async (Model, req, res) => {
   // }
   // i: case insensitive (thang, Thang, THANG)
   for (const field of fieldsArray) {
-    fields.$or.push({ [field]: { $regex: new RegExp(req.query.q, 'i') } })
+    fields.$or.push({
+      [field]: { $regex: new RegExp(escapeRegex(req.query.q), 'i') },
+    })
   }
 
   let results = await Model.find({

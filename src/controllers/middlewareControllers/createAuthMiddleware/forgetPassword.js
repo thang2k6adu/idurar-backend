@@ -76,7 +76,7 @@ export const forgetPassword = async (req, res, { userModel }) => {
     idurar_app_mail,
     subject: 'Reset your password | IDURAR',
     type: 'passwordVerification',
-  } )
+  })
 
   return res.status(200).json({
     success: true,

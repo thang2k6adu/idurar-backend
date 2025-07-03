@@ -8,7 +8,7 @@ const AdminPasswordSchema = new Schema({
     default: false,
   },
   user: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: 'Admin',
     required: true,
     unique: true,

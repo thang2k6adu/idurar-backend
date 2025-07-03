@@ -1,32 +1,35 @@
 // get all document without pagination
 export const listAll = async (Model, req, res) => {
   const sort = req.query.sort || 'desc'
-  const enabled = req.query.enabled || undefined
+  const enabledRaw = req.query.enabled
+  const enabled =
+    enabledRaw === 'true' ? true : enabledRaw === 'false' ? false : undefined
+  let results
 
-  let result
-
-  if (enabled) {
-    result = await Model.find({
+  if (enabled === undefined) {
+    results = await Model.find({
       removed: false,
-      enabled: enabled,
     })
       .sort({ created: sort })
       .populate() // no need to populate
       .exec()
-  } else { 
-    result = await Model.find({
+  } else {
+    results = await Model.find({
       removed: false,
+      enabled: enabled,
     })
       .sort({ created: sort })
       .populate()
       .exec()
   }
 
+  // const hasResults = Array.isArray(results) && results.length > 0
+
   return res.status(200).json({
-    success: result.length > 0,
-    result: result ? result : [],
+    success: results?.length > 0,
+    result: results ? results : [],
     message:
-      result.length > 0
+      results.length > 0
         ? 'Successfully found all documents'
         : 'No documents found by this request',
   })
