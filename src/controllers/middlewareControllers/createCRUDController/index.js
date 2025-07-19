@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import {modelFiles} from '~/models/utils'
+import { modelFiles } from '~/models/utils'
 
 import { create } from './create'
 import { filter } from './filter'
