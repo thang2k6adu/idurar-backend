@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { createCRUDController } from '~/controllers/middlewareControllers/createCRUDController'
 import { summary } from './summary'
 
-export const clientController = () => {
+const modelController = () => {
   const Model = mongoose.model('Client')
   const methods = createCRUDController('Client')
 
@@ -10,3 +10,5 @@ export const clientController = () => {
 
   return methods
 }
+
+export const clientController = modelController()
