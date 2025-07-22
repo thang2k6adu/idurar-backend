@@ -3,10 +3,10 @@
 // 1. soft delete all payments related to the invoice
 import mongoose from 'mongoose'
 
-const InvoiceModel = mongoose.model('Invoice')
-const PaymentModel = mongoose.model('Payment')
-
 export const remove = async (req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
+  const PaymentModel = mongoose.model('Payment')
+
   const deletedInvoice = await InvoiceModel.findOneAndUpdate(
     {
       _id: req.params.id,

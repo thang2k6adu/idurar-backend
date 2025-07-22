@@ -14,10 +14,11 @@
 import mongoose from 'mongoose'
 import moment from 'moment'
 
-const InvoiceModel = mongoose.model('Invoice')
 import { loadSettings } from '~/middlewares/settings'
 
 export const summary = async (req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
+
   let defaultType = 'month'
 
   const { type } = req.query

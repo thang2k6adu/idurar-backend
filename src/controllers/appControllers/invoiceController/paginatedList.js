@@ -4,9 +4,9 @@
 import mongoose from 'mongoose'
 import { escapeRegex } from '~/helpers'
 
-const InvoiceModel = mongoose.model('Invoice')
-
 export const paginatedList = async (req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
+
   const page = Math.max(parseInt(req.query.page) || 1, 1)
   // A limit = 0 might cause error
   const limit = Math.max(parseInt(req.query.limit) || 10, 1)

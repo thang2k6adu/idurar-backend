@@ -13,9 +13,9 @@ import mongoose from 'mongoose'
 import { calculate } from '~/helpers'
 import { schema } from './schemaValidate'
 
-const InvoiceModel = mongoose.model('Invoice')
-
 export const update = async (req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
+
   let body = req.body
 
   const { error, value } = schema.validate(body)
