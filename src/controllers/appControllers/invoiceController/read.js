@@ -3,9 +3,9 @@
 // 1. find and populate by createdBy (name)
 import mongoose from 'mongoose'
 
-const InvoiceModel = mongoose.model('Invoice')
-
 export const read = async (req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
+
   // find document by id
   const result = await InvoiceModel.findOne({
     _id: req.params.id,

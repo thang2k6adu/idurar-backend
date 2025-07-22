@@ -13,9 +13,8 @@ import { calculate } from '~/helpers'
 import { schema } from './schemaValidate'
 import { increaseBySettingKey } from '~/middlewares/settings/increaseBySettingKey'
 
-const InvoiceModel = mongoose.model('Invoice')
-
 export const create = async (req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
   let body = req.body
 
   const { error, value } = schema.validate(body)
