@@ -1,15 +1,14 @@
 import mongoose from 'mongoose'
 import moment from 'moment'
 
-const InvoiceModel = mongoose.model('Invoice')
-
 export const summary = async (Model, req, res) => {
+  const InvoiceModel = mongoose.model('Invoice')
   let defaultType = 'month'
   const { type } = req.query
 
   if (type && ['week', 'month', 'year'].includes(type)) {
     defaultType = type
-  } else {
+  } else if (type) {
     return res.status(400).json({
       success: false,
       result: null,
