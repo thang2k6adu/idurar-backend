@@ -9,6 +9,7 @@ methods.create = async (req, res) => {
 
   if (isDefault) {
     await PaymentModeModel.updateMany({}, { isDefault: false })
+    req.body.enabled = true
   }
 
   const countDefault = await PaymentModeModel.countDocuments({
@@ -18,7 +19,6 @@ methods.create = async (req, res) => {
   const result = await new PaymentModeModel({
     ...req.body,
     isDefault: countDefault < 1 ? true : false,
-    enabled: countDefault < 1 || isDefault ? true : enabled,
   })
 
   return res.status(201).json({
