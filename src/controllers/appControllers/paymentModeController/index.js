@@ -5,7 +5,7 @@ const methods = createCRUDController('PaymentMode')
 const PaymentModeModel = mongoose.model('PaymentModel')
 
 methods.create = async (req, res) => {
-  const { isDefault, enabled } = req.body
+  const { isDefault } = req.body
 
   if (isDefault) {
     await PaymentModeModel.updateMany({}, { isDefault: false })
@@ -63,7 +63,7 @@ methods.update = async (req, res) => {
   if ((isDefault && enabled) || isDefault) {
     await PaymentModeModel.updateMany(
       { _id: { $ne: _id } },
-      { isDefault: false}
+      { isDefault: false }
     )
   }
 
