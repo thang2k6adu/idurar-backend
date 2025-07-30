@@ -14,7 +14,7 @@ export const paginatedList = async (req, res) => {
 
   const { sortBy = 'enabled', sortValue = -1, filter, equal } = req.query
 
-  const sort = { [sortBy]: sortValue }
+  const sort = { [sortBy]: Number(sortValue) || -1 }
 
   // /api/settings?q=thang&fields=settingKey,settingCategory
   const fieldsArray = req.query.fields ? req.query.fields.split(',') : []
@@ -41,7 +41,7 @@ export const paginatedList = async (req, res) => {
     .populate('createdBy', 'name')
     .exec()
 
-  const countPromise = InvoiceModel.countDocuments({
+  const countPromise = QuoteModel.countDocuments({
     removed: false,
     ...queryConditions,
   })

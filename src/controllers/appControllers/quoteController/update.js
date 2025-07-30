@@ -30,7 +30,7 @@ export const update = async (req, res) => {
   let taxTotal = 0
   let total = 0
 
-  items.map((item) => {
+  items.forEach((item) => {
     let total = calculate.multiply(item.quantity, item.price)
     subTotal = calculate.add(total, subTotal)
 

@@ -16,4 +16,4 @@ methods.convertQuoteToInvoice = convertQuoteToInvoice
 methods.paginatedList = paginatedList
 methods.read = read
 
-export const quoteController = methods
+export default methods

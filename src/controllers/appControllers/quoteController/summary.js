@@ -101,7 +101,7 @@ export const summary = async (req, res) => {
             0,
           ],
         },
-        total_amount: '$result.total_amount',
+        total_amount: '$results.total_amount',
       },
     },
     {

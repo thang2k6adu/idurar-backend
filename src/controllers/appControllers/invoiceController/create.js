@@ -81,7 +81,7 @@ export const create = async (req, res) => {
     { new: true }
   ).exec()
 
-  increaseBySettingKey({
+  await increaseBySettingKey({
     settingKey: 'last_invoice_number',
   })
 

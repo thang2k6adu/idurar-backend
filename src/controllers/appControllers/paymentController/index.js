@@ -13,4 +13,4 @@ methods.update = update
 methods.sendMail = sendMail
 methods.remove = remove
 
-export const paymentController = methods
+export default methods

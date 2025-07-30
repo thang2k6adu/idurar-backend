@@ -4,9 +4,9 @@ import { globSync } from 'glob'
 import path from 'path'
 
 // match any folder at any depth
-const pattern = './src/models/appControllers/*/**/'
+const pattern = './src/controllers/appControllers/*/'
 const controllerDirectories = globSync(pattern).map((filePath) => {
-  // remove the src/models/appControllers/ from the path
+  // remove the src/controllers/appControllers/ from the path
   return path.basename(filePath)
 })
 
@@ -14,13 +14,16 @@ const appControllers = () => {
   const controllers = []
   const hasCustomControllers = []
 
+  // get custom controllers
   controllerDirectories.forEach((controllerName) => {
     try {
       const customController = require(
-        '~/controllers/appControllers/' + controllerName
+        path.resolve(
+          process.cwd(),
+          'src/controllers/appControllers/',
+          controllerName
+        )
       )
-
-      console.log(customController)
 
       if (customController) {
         hasCustomControllers.push(customController)
@@ -31,9 +34,9 @@ const appControllers = () => {
     }
   })
 
+  // get default controllers
   routesList.forEach(({ modelName, controllerName }) => {
     if (!hasCustomControllers.includes(controllerName)) {
-      console.log(modelName)
       controllers[controllerName] = createCRUDController(modelName)
     }
   })

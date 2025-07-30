@@ -11,4 +11,4 @@ const modelController = () => {
   return methods
 }
 
-export const clientController = modelController()
+export default modelController()
