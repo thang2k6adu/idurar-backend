@@ -36,7 +36,9 @@ app.get('/', (req, res) => {
   res.json({ message: 'ERP Backend API is running' })
 })
 app.use('/api', coreAuth)
+app.use('/api', adminAuth.isValidAuthToken, coreAuth)
 app.use('/api', adminAuth.isValidAuthToken, appApi)
+
 // app.use('/api', apiRoutes)
 
 // Error handling

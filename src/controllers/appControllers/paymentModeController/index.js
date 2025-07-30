@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { createCRUDController } from '~/controllers/middlewareControllers/createCRUDController'
 
 const methods = createCRUDController('PaymentMode')
-const PaymentModeModel = mongoose.model('PaymentModel')
+const PaymentModeModel = mongoose.model('PaymentMode')
 
 methods.create = async (req, res) => {
   const { isDefault } = req.body
@@ -19,7 +19,7 @@ methods.create = async (req, res) => {
   const result = await new PaymentModeModel({
     ...req.body,
     isDefault: countDefault < 1 ? true : false,
-  })
+  }).save()
 
   return res.status(201).json({
     success: true,
@@ -39,7 +39,7 @@ methods.delete = async (req, res) => {
 methods.update = async (req, res) => {
   const { _id } = req.params
   const paymentMode = await PaymentModeModel.findOne({
-    _id: req.params._id,
+    _id,
     removed: false,
   }).exec()
 
@@ -49,18 +49,26 @@ methods.update = async (req, res) => {
   // ne = not equal
   // ensure a record is default and enabled
   if (!isDefault || (!enabled && isDefault)) {
-    await PaymentModeModel.findOneAndUpdate(
-      {
-        _id: { $ne: _id },
-        enabled: true,
-      },
-      {
-        isDefault: true,
-      }
-    )
+    // fallback to the last enabled payment mode
+    const fallback = await PaymentModeModel.findOne({
+      _id: { $ne: _id },
+      removed: false,
+      enabled: true,
+    }).sort({ updatedAt: -1 }) // Ưu tiên cái mới nhất
+
+    if (!fallback) {
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: 'You must have at least one enabled default payment mode',
+      })
+    }
+
+    await PaymentModeModel.updateOne({ _id: fallback._id }, { isDefault: true })
   }
 
-  if ((isDefault && enabled) || isDefault) {
+  // avoid to update other payment mode when default is not changed
+  if (!paymentMode.isDefault && isDefault) {
     await PaymentModeModel.updateMany(
       { _id: { $ne: _id } },
       { isDefault: false }
@@ -93,4 +101,4 @@ methods.update = async (req, res) => {
   })
 }
 
-export const paymentModeController = methods
+export default methods

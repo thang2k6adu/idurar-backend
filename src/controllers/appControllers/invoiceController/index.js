@@ -17,4 +17,4 @@ methods.sendMail = sendMail
 methods.summary = summary
 methods.update = update
 
-export const invoiceController = methods
+export default methods

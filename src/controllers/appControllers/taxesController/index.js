@@ -44,7 +44,7 @@ methods.update = async (req, res) => {
   })
   const { isDefault = tax.isDefault, enabled = tax.enabled } = req.body
 
-  const countDefault = TaxesModel.countDocuments({
+  const countDefault = await TaxesModel.countDocuments({
     _id: { $ne: _id },
     removed: false,
     isDefault: true,
@@ -85,7 +85,7 @@ methods.update = async (req, res) => {
     })
   }
 
-  const result = await TaxesModel.updateOne({ _id }, req.body, { new: true })
+  const result = await TaxesModel.findOneAndUpdate({ _id }, req.body, { new: true })
 
   return res.status(200).json({
     success: true,
@@ -94,4 +94,4 @@ methods.update = async (req, res) => {
   })
 }
 
-export const taxesController = methods
+export default methods
