@@ -10,5 +10,6 @@ router.route('/resetpassword').post(errorHandlers.catchErrors(adminAuth.resetPas
 router
   .route('/logout')
   .post(adminAuth.isValidAuthToken, errorHandlers.catchErrors(adminAuth.logout))
+router.route('/register').post(errorHandlers.catchErrors(adminAuth.register))
 
 export default router

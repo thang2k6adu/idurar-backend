@@ -3,6 +3,7 @@ import { login } from './login'
 import { logout } from './logout'
 import { forgetPassword } from './forgetPassword'
 import { resetPassword } from './resetPassword'
+import { register } from './register'
 
 const createAuthMiddleware = (userModel) => {
   let authMethods = {}
@@ -19,6 +20,8 @@ const createAuthMiddleware = (userModel) => {
 
   authMethods.resetPassword = (req, res) =>
     resetPassword(req, res, { userModel })
+
+  authMethods.register = (req, res) => register(req, res, { userModel })
   return authMethods
 }
 

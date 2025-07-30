@@ -1,5 +1,9 @@
 import mongoose from 'mongoose'
 import { env } from '~/config/environment.js'
+
+// Import all models first to ensure they are registered with Mongoose
+import '~/models/index.js'
+
 import app from './app.js'
 
 mongoose.connect(env.DATABASE)

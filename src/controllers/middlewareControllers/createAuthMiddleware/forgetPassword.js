@@ -3,8 +3,6 @@ import mongoose from 'mongoose'
 import { checkAndCorrectURL } from './checkAndCorrectURL'
 import { sendMail } from './sendMail'
 import shortid from 'shortid'
-import { AdminPassword } from '~/models/coreModels/AdminPassword'
-import { Admin } from '~/models/coreModels/Admin'
 
 // import { loadSettings } from '~/middlewares/settings'
 

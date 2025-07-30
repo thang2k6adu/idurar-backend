@@ -4,6 +4,8 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import { errorHandlers } from '~/handlers/errorHandlers'
 import coreAuth from '~/routes/coreRoutes/coreAuth'
+import appApi from '~/routes/appRoutes/appApi'
+import adminAuth from './controllers/coreControllers/adminAuth'
 
 const app = express()
 
@@ -34,6 +36,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'ERP Backend API is running' })
 })
 app.use('/api', coreAuth)
+app.use('/api', adminAuth.isValidAuthToken, appApi)
 // app.use('/api', apiRoutes)
 
 // Error handling
