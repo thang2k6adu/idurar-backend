@@ -16,7 +16,7 @@ import { calculate } from '~/helpers'
 export const update = async (req, res) => {
   let body = req.body
   const QuoteModel = mongoose.model('Quote')
-  const { items = [], taxRate = 0, discount = 0 } = req.body
+  const { items = [], taxRate = 0 } = req.body
 
   if (items.length === 0) {
     return res.status(400).json({
