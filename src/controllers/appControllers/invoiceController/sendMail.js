@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+// import mongoose from 'mongoose'
 
 export const sendMail = async (req, res) => {
   return res.status(200).json({

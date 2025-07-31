@@ -19,7 +19,7 @@ export const update = async (req, res) => {
 
   let body = req.body
 
-  const { error, value } = schema.validate(body)
+  const { error } = schema.validate(body)
   // ValidationError {
   //   message: string;
   //   details: Array<{

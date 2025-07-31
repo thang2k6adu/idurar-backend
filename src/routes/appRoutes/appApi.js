@@ -7,12 +7,15 @@ const router = express.Router()
 
 const routerApp = (entity, controller) => {
   router.route(`/${entity}/create`).post(errorHandlers.catchErrors(controller.create))
-  router.route(`/${entity}/read`).get(errorHandlers.catchErrors(controller.read))
-  router.route(`/${entity}/update`).put(errorHandlers.catchErrors(controller.update))
-  router.route(`/${entity}/remove`).delete(errorHandlers.catchErrors(controller.remove))
+  router.route(`/${entity}/read/:id`).get(errorHandlers.catchErrors(controller.read))
+  router.route(`/${entity}/update/:id`).put(errorHandlers.catchErrors(controller.update))
+  router.route(`/${entity}/remove/:id`).delete(errorHandlers.catchErrors(controller.remove))
   router
     .route(`/${entity}/paginatedList`)
     .get(errorHandlers.catchErrors(controller.paginatedList))
+  router.route(`/${entity}/search`).get(errorHandlers.catchErrors(controller.search))
+  router.route(`/${entity}/filter`).get(errorHandlers.catchErrors(controller.filter))
+  router.route(`/${entity}/listAll`).get(errorHandlers.catchErrors(controller.listAll))
   router.route(`/${entity}/summary`).get(errorHandlers.catchErrors(controller.summary))
   router.route(`/${entity}/sendMail`).post(errorHandlers.catchErrors(controller.sendMail))
 
