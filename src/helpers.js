@@ -7,7 +7,7 @@ export const calculate = {
   add: (firstValue, secondValue) => {
     return currency(firstValue).add(secondValue).value
   },
-  subtract: (firstValue, secondValue) => {
+  sub: (firstValue, secondValue) => {
     return currency(firstValue).subtract(secondValue).value
   },
   multiply: (firstValue, secondValue) => {

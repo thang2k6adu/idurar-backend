@@ -24,15 +24,17 @@ const appControllers = () => {
           controllerName
         )
       )
+      // console.log('customController', customController)
 
       if (customController) {
-        hasCustomControllers.push(customController)
-        controllers[controllerName] = customController
+        hasCustomControllers.push(controllerName)
+        controllers[controllerName] = customController.default
       }
     } catch (error) {
       throw new Error(error.message)
     }
   })
+  // console.log('hasCustomControllers', hasCustomControllers)
 
   // get default controllers
   routesList.forEach(({ modelName, controllerName }) => {
@@ -40,6 +42,7 @@ const appControllers = () => {
       controllers[controllerName] = createCRUDController(modelName)
     }
   })
+  console.log('controllers', controllers)
 
   return controllers
 }
