@@ -1,3 +1,3 @@
 import { createUserController } from '~/controllers/middlewareControllers/createUserController'
 
-export const adminControllers = createUserController('Admin')
+export default createUserController('Admin')

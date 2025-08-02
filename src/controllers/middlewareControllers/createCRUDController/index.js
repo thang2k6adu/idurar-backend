@@ -21,6 +21,7 @@ export const createCRUDController = (modelName) => {
     create: (req, res) => create(Model, req, res),
     filter: (req, res) => filter(Model, req, res),
     listAll: (req, res) => listAll(Model, req, res),
+    list: (req, res) => paginatedList(Model, req, res),
     paginatedList: (req, res) => paginatedList(Model, req, res),
     read: (req, res) => read(Model, req, res),
     remove: (req, res) => remove(Model, req, res),

@@ -15,6 +15,7 @@ const routerApp = (entity, controller) => {
     .get(errorHandlers.catchErrors(controller.paginatedList))
   router.route(`/${entity}/search`).get(errorHandlers.catchErrors(controller.search))
   router.route(`/${entity}/filter`).get(errorHandlers.catchErrors(controller.filter))
+  router.route(`/${entity}/list`).get(errorHandlers.catchErrors(controller.list))
   router.route(`/${entity}/listAll`).get(errorHandlers.catchErrors(controller.listAll))
   router.route(`/${entity}/summary`).get(errorHandlers.catchErrors(controller.summary))
   router.route(`/${entity}/sendMail`).post(errorHandlers.catchErrors(controller.sendMail))

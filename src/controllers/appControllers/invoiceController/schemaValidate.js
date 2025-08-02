@@ -6,6 +6,7 @@ export const schema = Joi.object({
   status: Joi.string().trim().required(),
   notes: Joi.string().trim().allow(''),
   date: Joi.date().required(),
+  expiredDate: Joi.date().required(),
   items: Joi.array().items(
     Joi.object({
       // Create doesnot need _id, FE can send with '' or not

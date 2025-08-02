@@ -6,6 +6,7 @@ import { errorHandlers } from '~/handlers/errorHandlers'
 import coreAuth from '~/routes/coreRoutes/coreAuth'
 import appApi from '~/routes/appRoutes/appApi'
 import adminAuth from './controllers/coreControllers/adminAuth'
+import coreApi from '~/routes/coreRoutes/coreApi'
 
 const app = express()
 
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'ERP Backend API is running' })
 })
 app.use('/api', coreAuth)
+app.use('/api', adminAuth.isValidAuthToken, coreApi)
 app.use('/api', adminAuth.isValidAuthToken, coreAuth)
 app.use('/api', adminAuth.isValidAuthToken, appApi)
 

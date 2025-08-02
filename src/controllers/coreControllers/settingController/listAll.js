@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 export const listAll = async (req, res) => {
   const SettingModel = mongoose.model('Setting')
-  const { sort } = parseInt(req.query.sort) || 'desc'
+  const sort = req.query.sort || 'desc'
 
   const result = await SettingModel.find({
     removed: false,

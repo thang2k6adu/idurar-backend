@@ -21,7 +21,7 @@ export const authUser = async (
   // if true
   if (isMatch === true) {
     // create token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: req.body.remember ? 365 * 24 + 'h' : '24h',
     })
 
