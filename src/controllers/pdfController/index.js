@@ -6,15 +6,16 @@ import { listAllSettings, loadSettings } from '~/middlewares/settings'
 import useLanguage from '~/locale/useLanguage'
 import { useMoney, useDate } from '~/settings'
 import dotenv from 'dotenv'
+import path from 'path'
 
 dotenv.config({ path: '.env' })
 dotenv.config({ path: '.env.local' })
 
 const pugFiles = ['invoice', 'offer', 'quote', 'payment']
 
-export const generatePdf = async (
+export const generatePdf = (
   modelName,
-  info = { filename: 'pdf_file', format: 'A5', targetLocation: '' },
+  info = { fileName: 'pdf_file', format: 'A5', targetLocation: '' },
   data,
   callback
 ) => {
@@ -27,7 +28,7 @@ export const generatePdf = async (
     }
 
     if (pugFiles.includes(modelName.toLowerCase())) {
-      const settings = await loadSettings()
+      const settings = loadSettings()
       const selectedLang = settings['idurar_app_language']
       const translate = useLanguage({ selectedLang })
 
@@ -67,16 +68,29 @@ export const generatePdf = async (
         moment,
       })
 
-      pdf
-        .create(htmlContent, {
-          format: info.format,
-          orientation: 'portrait',
-          border: '10mm',
-        })
-        .toFile(targetLocation, function (error) {
-          if (error) throw new Error(error)
-          if (callback) callback()
-        })
+      const folder = path.dirname(targetLocation) //extract just the folder path (remove filename)
+      if (!fs.existsSync(folder)) {
+        fs.mkdirSync(folder, { recursive: true })
+      }
+
+      // Modern asynchronous functions return Promises and can be used with 'await'.
+      // Older Node.js-style APIs (like res.download or pdf.create().toFile) use callbacks instead,
+      // which means 'await' won't work unless you manually wrap them in a Promise.
+      // Always wrap callback-based functions if you want to use async/await consistently.
+      return new Promise((resolve, reject) => {
+        pdf
+          .create(htmlContent, {
+            format: info.format,
+            orientation: 'portrait',
+            border: '10mm',
+          })
+          .toFile(targetLocation, function (error, res) {
+            if (error) return reject(error)
+            resolve(res) // res includes info like filename, path, etc.
+          })
+      })
+    } else {
+      throw new Error(`No pug template found for model: ${modelName}`)
     }
   } catch (error) {
     throw new Error(error)
