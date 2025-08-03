@@ -21,6 +21,7 @@
     "test": "jest --config jest.config.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.859.0",
     "@babel/runtime": "^7.27.6",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
@@ -39,9 +40,11 @@
     "moment": "^2.30.1",
     "mongoose": "^8.15.2",
     "mongoose-autopopulate": "^1.1.0",
+    "multer": "^2.0.2",
     "pug": "^3.0.3",
     "resend": "^4.6.0",
-    "shortid": "^2.2.17"
+    "shortid": "^2.2.17",
+    "transliteration": "^2.3.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.27.2",
