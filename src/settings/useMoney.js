@@ -11,7 +11,6 @@ export const useMoney = ({ settings }) => {
   } = settings
 
   const currencyFormat = (amount) => {
-    console.log(thousand_sep, decimal_sep)
     // .dollars() returns the amount in dollars ( eg: 1.99 -> 1)
     return currency(amount).dollars() > 0 || !zero_format
       ? currency(amount, {

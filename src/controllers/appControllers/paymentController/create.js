@@ -21,7 +21,7 @@ export const create = async (req, res) => {
   }
 
   const currentInvoice = await InvoiceModel.findOne({
-    _id: req.body.invoiceId,
+    _id: req.body.invoice,
     removed: false,
   })
 
@@ -83,7 +83,7 @@ export const create = async (req, res) => {
 
   await InvoiceModel.findOneAndUpdate(
     {
-      _id: req.body.invoiceId,
+      _id: req.body.invoice,
       removed: false,
     },
     {

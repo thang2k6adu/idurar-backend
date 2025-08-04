@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 export const read = async (req, res) => {
   const QuoteModel = mongoose.model('Quote')
   const result = await QuoteModel.findOne({
-    _id: req.params._id,
+    _id: req.params.id,
     removed: false,
   })
     .populate('createdBy', 'name')

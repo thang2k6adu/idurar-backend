@@ -30,19 +30,13 @@ export const generatePdf = async (
       throw new Error(`No pug template found for model: ${modelName}`)
     }
 
-    const settings = loadSettings()
+    const settings = await loadSettings()
     const selectedLang = settings['idurar_app_language']
     const translate = useLanguage({ selectedLang })
 
-    const {
-      currency_symbol,
-      currency_position,
-      decimal_sep,
-      thousand_sep,
-      cent_precision,
-      zero_format,
-    } = settings
+    const { currency_symbol, currency_position, decimal_sep, thousand_sep, cent_precision, zero_format } = settings
 
+    // console.log(settings)
     const { moneyFormatter } = useMoney({
       settings: {
         currency_symbol,

@@ -28,7 +28,7 @@ export const downloadPdf = async (req, res, { directory, id }) => {
 
     const fileId = modelName.toLowerCase() + '-' + result._id + '.pdf'
     const folderPath = modelName.toLowerCase()
-    const targetLocation = path.join('src/public/download', folderPath, fileId)
+    const targetLocation = path.join('src/public/downloads', folderPath, fileId)
 
     await generatePdf(
       modelName,

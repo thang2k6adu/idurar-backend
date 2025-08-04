@@ -37,21 +37,19 @@ methods.delete = async (req, res) => {
 }
 
 methods.update = async (req, res) => {
-  const { _id } = req.params
+  const { id } = req.params
   const paymentMode = await PaymentModeModel.findOne({
-    _id,
+    _id: id,
     removed: false,
   }).exec()
 
-  const { isDefault = paymentMode.isDefault, enabled = paymentMode.enabled } =
-    req.body
-
+  const { isDefault = paymentMode.isDefault, enabled = paymentMode.enabled } = req.body
   // ne = not equal
   // ensure a record is default and enabled
-  if (!isDefault || (!enabled && isDefault)) {
+  if (!isDefault || (!enabled && isDefault && paymentMode.isDefault)) {
     // fallback to the last enabled payment mode
     const fallback = await PaymentModeModel.findOne({
-      _id: { $ne: _id },
+      _id: { $ne: id },
       removed: false,
       enabled: true,
     }).sort({ updatedAt: -1 }) // Ưu tiên cái mới nhất
@@ -64,15 +62,17 @@ methods.update = async (req, res) => {
       })
     }
 
+    console.log('ok')
+    req.body.isDefault = false
+    if (!enabled) {
+      req.body.enabled = false
+    }
     await PaymentModeModel.updateOne({ _id: fallback._id }, { isDefault: true })
   }
 
   // avoid to update other payment mode when default is not changed
   if (!paymentMode.isDefault && isDefault) {
-    await PaymentModeModel.updateMany(
-      { _id: { $ne: _id } },
-      { isDefault: false }
-    )
+    await PaymentModeModel.updateMany({ _id: { $ne: id } }, { isDefault: false })
   }
 
   const paymentModeCount = await PaymentModeModel.countDocuments({})
@@ -81,14 +81,15 @@ methods.update = async (req, res) => {
     return res.status(400).json({
       success: false,
       result: null,
-      message:
-        'You cannot disable this payment mode because it is the only existing one',
+      message: 'You cannot disable this payment mode because it is the only existing one',
     })
   }
 
+  console.log(enabled)
+
   const result = await PaymentModeModel.findOneAndUpdate(
-    { _id },
-    { ...req.body, enabled: isDefault ? true : enabled },
+    { _id: id },
+    { ...req.body, enabled },
     {
       new: true,
     }
