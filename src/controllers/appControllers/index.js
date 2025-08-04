@@ -17,13 +17,7 @@ const appControllers = () => {
   // get custom controllers
   controllerDirectories.forEach((controllerName) => {
     try {
-      const customController = require(
-        path.resolve(
-          process.cwd(),
-          'src/controllers/appControllers/',
-          controllerName
-        )
-      )
+      const customController = require(path.resolve(process.cwd(), 'src/controllers/appControllers/', controllerName))
       // console.log('customController', customController)
 
       if (customController) {
@@ -34,7 +28,6 @@ const appControllers = () => {
       throw new Error(error.message)
     }
   })
-  // console.log('hasCustomControllers', hasCustomControllers)
 
   // get default controllers
   routesList.forEach(({ modelName, controllerName }) => {
@@ -42,7 +35,7 @@ const appControllers = () => {
       controllers[controllerName] = createCRUDController(modelName)
     }
   })
-  console.log('controllers', controllers)
+  // console.log('controllers', controllers)
 
   return controllers
 }

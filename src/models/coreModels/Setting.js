@@ -36,4 +36,5 @@ const SettingSchema = new mongoose.Schema({
   }
 })
 
-export const SettingModel = mongoose.model('Setting', SettingSchema)
+const SettingModel = mongoose.model('Setting', SettingSchema)
+export default SettingModel

@@ -3,57 +3,36 @@ import cors from 'cors'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import { errorHandlers } from '~/handlers/errorHandlers'
-import coreAuth from '~/routes/coreRoutes/coreAuth'
-import appApi from '~/routes/appRoutes/appApi'
-import adminAuth from './controllers/coreControllers/adminAuth'
-import coreApi from '~/routes/coreRoutes/coreApi'
 
-const app = express()
+// 👇 Đừng import router ở đây
+// import coreAuth from '~/routes/coreRoutes/coreAuth'
+// import appApi from '~/routes/appRoutes/appApi'
+// import adminAuth from './controllers/coreControllers/adminAuth'
+// import coreApi from '~/routes/coreRoutes/coreApi'
+// import coreDownloadRouter from '~/routes/coreRoutes/coreDownloadRouter'
+// import corePublicRouter from '~/routes/coreRoutes/corePublicRouter'
 
-// Middleware setup
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
+export function createApp({ coreAuth, adminAuth, coreApi, appApi, coreDownloadRouter, corePublicRouter }) {
+  const app = express()
+
+  app.use(cors({ origin: true, credentials: true }))
+  app.use(cookieParser())
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
+  app.use(compression())
+
+  app.get('/', (req, res) => {
+    res.json({ message: 'ERP Backend API is running' })
   })
-)
 
-// Dùng để truy cập cookie dễ dàng từ request
-app.use(cookieParser())
+  app.use('/api', coreAuth)
+  app.use('/api', adminAuth.isValidAuthToken, coreApi)
+  app.use('/api', adminAuth.isValidAuthToken, appApi)
+  app.use('/download', coreDownloadRouter)
+  app.use('/public', corePublicRouter)
 
-// Dùng để xử lý JSON trong request body
-app.use(express.json())
+  app.use(errorHandlers.notFound)
+  app.use(errorHandlers.productionErrors)
 
-// Dùng để xử lý URL encoded data trong request body
-app.use(express.urlencoded({ extended: true }))
-
-// Dùng để nén response body
-// When header has Accept-Encoding: gzip, deflate, br, it will be compressed
-// Compression is automatically applied to all responses
-app.use(compression())
-
-// Basic route
-app.get('/', (req, res) => {
-  res.json({ message: 'ERP Backend API is running' })
-})
-app.use('/api', coreAuth)
-app.use('/api', adminAuth.isValidAuthToken, coreApi)
-app.use('/api', adminAuth.isValidAuthToken, coreAuth)
-app.use('/api', adminAuth.isValidAuthToken, appApi)
-
-// app.use('/api', apiRoutes)
-
-// Error handling
-// Không có route khớp, we 404 them and forward to error handler
-app.use(errorHandlers.notFound)
-
-// production error handler
-// if (process.env.NODE_ENV === 'development') {
-//   app.use(errorHandlers.developmentErrors)
-// } else {
-//   app.use(errorHandlers.productionError)
-// }
-// run when next(error) is called, throw error, khong bat loi
-app.use(errorHandlers.productionErrors)
-
-export default app
+  return app
+}

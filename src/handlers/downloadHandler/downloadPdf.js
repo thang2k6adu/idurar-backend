@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { generatePdf } from '~/controllers/pdfController'
+import path from 'path'
 
 export const downloadPdf = async (req, res, { directory, id }) => {
   try {

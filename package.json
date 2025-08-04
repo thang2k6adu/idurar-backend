@@ -15,9 +15,9 @@
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && cross-env NODE_ENV=production node ./build/src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/server.js",
-    "setup": "node src/setup/setup.js",
+    "setup": "babel-node src/setup/setup.js",
     "upgrade": "node src/setup/upgrade.js",
-    "reset": "node src/setup/reset.js",
+    "reset": "babel-node src/setup/reset.js",
     "test": "jest --config jest.config.mjs"
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "currency.js": "^2.0.4",
     "dotenv": "^16.3.1",
     "express": "^4.21.2",
+    "express-fileupload": "^1.5.2",
     "glob": "^11.0.3",
     "html-pdf": "^3.0.1",
     "joi": "^17.13.3",
@@ -42,6 +43,7 @@
     "mongoose-autopopulate": "^1.1.0",
     "multer": "^2.0.2",
     "pug": "^3.0.3",
+    "puppeteer": "^24.15.0",
     "resend": "^4.6.0",
     "shortid": "^2.2.17",
     "transliteration": "^2.3.5"

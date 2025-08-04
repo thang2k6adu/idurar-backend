@@ -8,8 +8,8 @@ const router = express.Router()
 const routerApp = (entity, controller) => {
   router.route(`/${entity}/create`).post(errorHandlers.catchErrors(controller.create))
   router.route(`/${entity}/read/:id`).get(errorHandlers.catchErrors(controller.read))
-  router.route(`/${entity}/update/:id`).put(errorHandlers.catchErrors(controller.update))
-  router.route(`/${entity}/remove/:id`).delete(errorHandlers.catchErrors(controller.remove))
+  router.route(`/${entity}/update/:id`).patch(errorHandlers.catchErrors(controller.update))
+  router.route(`/${entity}/delete/:id`).delete(errorHandlers.catchErrors(controller.remove))
   router
     .route(`/${entity}/paginatedList`)
     .get(errorHandlers.catchErrors(controller.paginatedList))

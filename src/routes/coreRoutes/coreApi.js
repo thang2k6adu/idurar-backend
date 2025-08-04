@@ -9,11 +9,16 @@ const router = express.Router()
 // //_______________________________ Admin management_______________________________
 router.route('/admin/read/:id').get(errorHandlers.catchErrors(adminController.read))
 // Update any user password
-router.route('/admin/password-update/:id').patch(catchErrors(adminController.updatePassword))
+router.route('/admin/password-update/:id').patch(errorHandlers.catchErrors(adminController.updatePassword))
 
 //_______________________________ Admin Profile _______________________________
 router.route('/admin/profile/password').patch(errorHandlers.catchErrors(adminController.updateProfilePassword))
-router.route('/admin/profile/update').patch(errorHandlers.catchErrors(adminController.updateProfile))
+router
+  .route('/admin/profile/update')
+  .patch(
+    localSingleStorage({ entity: 'admin', fieldName: 'photo', fileType: 'image' }),
+    errorHandlers.catchErrors(adminController.updateProfile)
+  )
 
 // API for global settings
 router.route('/setting/create').post(errorHandlers.catchErrors(settingController.create))

@@ -4,7 +4,7 @@ import { increaseBySettingKey } from './increaseBySettingKey'
 import { readSettingByKey } from './readSettingByKey'
 import { updateSettingByKey } from './updateSettingByKey'
 
-export default {
+export {
   loadSettings,
   listAllSettings,
   increaseBySettingKey,

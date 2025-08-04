@@ -150,4 +150,5 @@ const QuoteSchema = new mongoose.Schema({
 })
 
 QuoteSchema.plugin(autopopulate)
-export const Quote = mongoose.model('Quote', QuoteSchema)
+const Quote = mongoose.model('Quote', QuoteSchema)
+export default Quote

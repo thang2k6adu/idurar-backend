@@ -40,4 +40,5 @@ const ClientSchema = new mongoose.Schema({
 
 // ClientSchema.plugin(autopopulate)
 
-export const Client = mongoose.model('Client', ClientSchema)
+const Client = mongoose.model('Client', ClientSchema)
+export default Client

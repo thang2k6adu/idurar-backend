@@ -27,7 +27,7 @@ export const DoSingleStorage = ({
     if (
       !req.files ||
       Object.keys(req.files)?.length === 0 ||
-      !req.files?.file[0]
+      !req.files?.file
     ) {
       req.body[fieldName] = null
       next()
@@ -38,13 +38,13 @@ export const DoSingleStorage = ({
         if (
           !fileFilterMiddleware({
             type: fileType,
-            mimeType: req.files.file[0].mimetype,
+            mimeType: req.files.file.mimetype,
           })
         ) {
           throw new Error('Uploaded file type not supported')
         }
 
-        let fileExtension = path.extname(req.files.file[0].name)
+        let fileExtension = path.extname(req.files.file.name)
         // After parse
         // {
         //   root: '',
@@ -53,7 +53,7 @@ export const DoSingleStorage = ({
         //   ext: '.png',
         //   name: 'myphoto.image'
         // }
-        const fileNameWithoutExtension = path.parse(req.files.file[0]).name
+        const fileNameWithoutExtension = path.parse(req.files.file).name
 
         let uniqueFileID = Math.random().toString(36).slice(2, 7)
         let originalName = ''
@@ -70,7 +70,7 @@ export const DoSingleStorage = ({
         let uploadParams = {
           Bucket: bucketName,
           Key: filePath,
-          Body: req.files.file[0].data,
+          Body: req.files.file.data,
           // ContentType: file.mimetype,
           ACL: 'public-read', // Cho phép xem file public (tuỳ chọn)
         }

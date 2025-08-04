@@ -15,6 +15,7 @@ import mongoose from 'mongoose'
 import moment from 'moment'
 
 import { loadSettings } from '~/middlewares/settings'
+import settingMethods from '~/controllers/coreControllers/settingController'
 
 export const summary = async (req, res) => {
   const InvoiceModel = mongoose.model('Invoice')
@@ -23,7 +24,9 @@ export const summary = async (req, res) => {
 
   const { type } = req.query
 
+  // console.log('settings')
   const settings = await loadSettings()
+  // console.log('settings', settings)
 
   if (type) {
     if (['week', 'month', 'year'].includes(type)) {
@@ -41,14 +44,7 @@ export const summary = async (req, res) => {
   let startDate = currentDate.clone().startOf(defaultType)
   let endDate = currentDate.clone().endOf(defaultType)
 
-  const statuses = [
-    'draft',
-    'pending',
-    'overdue',
-    'paid',
-    'unpaid',
-    'partially',
-  ]
+  const statuses = ['draft', 'pending', 'overdue', 'paid', 'unpaid', 'partially']
 
   const response = await InvoiceModel.aggregate([
     {
@@ -155,19 +151,13 @@ export const summary = async (req, res) => {
   const statusResultMap = statusResult.map((item) => ({
     ...item,
     // Division by zero error
-    percentage:
-      totalInvoice.count > 0
-        ? Math.round((item.count / totalInvoice.count) * 100)
-        : 0,
+    percentage: totalInvoice.count > 0 ? Math.round((item.count / totalInvoice.count) * 100) : 0,
   }))
 
   const paymentStatusResultMap = paymentStatusResult.map((item) => ({
     ...item,
     // Division by zero error
-    percentage:
-      totalInvoice.count > 0
-        ? Math.round((item.count / totalInvoice.count) * 100)
-        : 0,
+    percentage: totalInvoice.count > 0 ? Math.round((item.count / totalInvoice.count) * 100) : 0,
   }))
 
   // const overdueCount = overdueResult.reduce((acc, item) => acc + item.count, 0);
@@ -181,18 +171,13 @@ export const summary = async (req, res) => {
     ...item,
     status: 'overdue',
     // Division by zero error
-    percentage:
-      totalInvoice.count > 0
-        ? Math.round((item.count / totalInvoice.count) * 100)
-        : 0,
+    percentage: totalInvoice.count > 0 ? Math.round((item.count / totalInvoice.count) * 100) : 0,
   }))
 
   statuses.forEach((status) => {
-    const found = [
-      ...paymentStatusResultMap,
-      ...statusResultMap,
-      ...overdueResultMap,
-    ].find((item) => item.status === status)
+    const found = [...paymentStatusResultMap, ...statusResultMap, ...overdueResultMap].find(
+      (item) => item.status === status
+    )
     if (found) {
       result.push(found)
     }

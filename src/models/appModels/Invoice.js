@@ -176,4 +176,5 @@ const InvoiceSchema = new mongoose.Schema({
 })
 
 InvoiceSchema.plugin(autopopulate)
-export const Invoice = mongoose.model('Invoice', InvoiceSchema)
+const Invoice = mongoose.model('Invoice', InvoiceSchema)
+export default Invoice

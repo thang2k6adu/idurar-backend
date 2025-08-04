@@ -26,4 +26,5 @@ const TaxesSchema = new mongoose.Schema({
   },
 })
 
-export const Taxes = mongoose.model('Taxes', TaxesSchema)
+const Taxes = mongoose.model('Taxes', TaxesSchema)
+export default Taxes

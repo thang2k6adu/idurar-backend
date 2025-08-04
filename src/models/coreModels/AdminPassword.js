@@ -58,4 +58,5 @@ AdminPasswordSchema.methods.isValidPassword = async (password) => {
 //   { timestamps: true }
 // )
 
-export const AdminPassword = mongoose.model('AdminPassword', AdminPasswordSchema)
+const AdminPassword = mongoose.model('AdminPassword', AdminPasswordSchema)
+export default AdminPassword

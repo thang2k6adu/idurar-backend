@@ -30,4 +30,5 @@ const PaymentModeSchema = new mongoose.Schema({
   },
 })
 
-export const PaymentMode = mongoose.model('PaymentMode', PaymentModeSchema)
+const PaymentMode = mongoose.model('PaymentMode', PaymentModeSchema)
+export default PaymentMode

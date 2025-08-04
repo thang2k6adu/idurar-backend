@@ -49,4 +49,5 @@ const AdminSchema = new Schema({
 })
 
 // this instance will validate data before saving to the database (or create)
-export const Admin = mongoose.model('Admin', AdminSchema)
+const Admin = mongoose.model('Admin', AdminSchema)
+export default Admin

@@ -1,4 +1,4 @@
-const pattern = './src/models/**/*.js'
+const pattern = './src/models/!(*utils)/**/*.js'
 import { globSync } from 'glob'
 // basename (user.js), extname (.js)
 import { basename, extname } from 'path'
@@ -57,6 +57,14 @@ for (const filePath of appModelsFiles) {
 }
 
 export {
+  modelFiles,
+  controllersList,
+  appModelsList,
+  entityList,
+  routesList,
+}
+
+export default {
   modelFiles,
   controllersList,
   appModelsList,

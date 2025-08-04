@@ -13,6 +13,7 @@ export const updateProfile = async (userModel, req, res) => {
       message: 'Cannot update demo informations',
     })
   }
+  console.log(req.body)
 
   let updates = req.body.photo
     ? {

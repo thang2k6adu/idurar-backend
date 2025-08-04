@@ -65,4 +65,5 @@ const PaymentSchema = new mongoose.Schema({
 })
 
 PaymentSchema.plugin(autopopulate)
-export const Payment = mongoose.model('Payment', PaymentSchema)
+const Payment = mongoose.model('Payment', PaymentSchema)
+export default Payment
