@@ -28,8 +28,8 @@ methods.create = async (req, res) => {
   })
 }
 
-methods.delete = async (req, res) => {
-  return res.status(200).json({
+methods.remove = async (req, res) => {
+  return res.status(400).json({
     success: false,
     result: null,
     message: 'Cannot delete tax after it has been created',

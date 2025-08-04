@@ -28,7 +28,7 @@ methods.create = async (req, res) => {
   })
 }
 
-methods.delete = async (req, res) => {
+methods.remove = async (req, res) => {
   return res.status(400).json({
     success: false,
     result: null,

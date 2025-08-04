@@ -11,6 +11,7 @@ export const updateManySetting = async (req, res) => {
     const { settingKey, settingValue } = setting
 
     if (!settingKey || !settingValue) {
+      console.log(settingKey, settingValue)
       settingHasError = true
       break
     }

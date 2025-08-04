@@ -23,12 +23,7 @@ export const remove = async (req, res) => {
   }
 
   const { _id: paymentId, amount: previousAmount } = previousPayment
-  const {
-    _id: invoiceId,
-    total,
-    discount,
-    credit: previousCredit,
-  } = previousPayment.invoiceId
+  const { _id: invoiceId, total, discount, credit: previousCredit } = previousPayment.invoice
 
   let updates = {
     removed: true,
@@ -38,7 +33,8 @@ export const remove = async (req, res) => {
     { _id: req.params.id, removed: false },
     { $set: updates },
     {
-      new: true,previousAmount
+      new: true,
+      previousAmount,
     }
   ).exec()
 
@@ -51,10 +47,9 @@ export const remove = async (req, res) => {
   }
 
   let paymentStatus =
-    calculate.sub(total, discount) ===
-    calculate.sub(previousCredit, previousAmount)
+    calculate.sub(total, discount) === calculate.sub(previousCredit, previousAmount)
       ? 'paid'
-      : calculate.sub(previousCredit, previousAmoun) > 0
+      : calculate.sub(previousCredit, previousAmount) > 0
         ? 'partially'
         : 'unpaid'
 
@@ -72,6 +67,6 @@ export const remove = async (req, res) => {
   return res.status(200).json({
     success: true,
     result,
-    message: 'Payment removed successfully'
+    message: 'Payment removed successfully',
   })
 }
