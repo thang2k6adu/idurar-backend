@@ -38,6 +38,12 @@ router.route('/setting/listBySettingKey').get(errorHandlers.catchErrors(settingC
 router
   .route('/setting/updateBySettingKey/:settingKey?')
   .patch(errorHandlers.catchErrors(settingController.updateBySettingKey))
+router
+  .route('/setting/upload/:settingKey?')
+  .patch(
+    localSingleStorage({ entity: 'setting', fieldName: 'photo', fileType: 'image' }),
+    errorHandlers.catchErrors(settingController.updateBySettingKey)
+  )
 // router
 //   .route('/setting/upload/:settingKey?')
 //   .patch(

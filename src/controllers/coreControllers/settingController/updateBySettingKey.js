@@ -12,9 +12,9 @@ export const updateBySettingKey = async (req, res) => {
     })
   }
 
-  const settingValue = req.body.settingValue
+  const { settingValue, photo } = req.body
 
-  if (!settingValue) {
+  if (!settingValue && !photo) {
     return res.status(400).json({
       success: false,
       result: null,
@@ -22,14 +22,18 @@ export const updateBySettingKey = async (req, res) => {
     })
   }
 
-  const result = await SettingModel.findOneAndUpdate({
-    settingKey,
-    removed: false,
-  }, {
-    settingValue,
-  }, {
-    new: true,
-  }).exec()
+  const result = await SettingModel.findOneAndUpdate(
+    {
+      settingKey,
+      removed: false,
+    },
+    {
+      settingValue: settingValue || photo,
+    },
+    {
+      new: true,
+    }
+  ).exec()
 
   if (result) {
     return res.status(200).json({

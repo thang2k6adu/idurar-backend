@@ -3,6 +3,7 @@ import cors from 'cors'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import { errorHandlers } from '~/handlers/errorHandlers'
+import path from 'path'
 
 // 👇 Đừng import router ở đây
 // import coreAuth from '~/routes/coreRoutes/coreAuth'
@@ -30,6 +31,8 @@ export function createApp({ coreAuth, adminAuth, coreApi, appApi, coreDownloadRo
   app.use('/api', adminAuth.isValidAuthToken, appApi)
   app.use('/download', coreDownloadRouter)
   app.use('/public', corePublicRouter)
+
+  app.use('/public', express.static(path.join(__dirname, '../public')));
 
   app.use(errorHandlers.notFound)
   app.use(errorHandlers.productionErrors)

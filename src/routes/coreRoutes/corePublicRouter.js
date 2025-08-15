@@ -21,7 +21,6 @@ router.route('/:subPath/:directory/:file').get((req, res) => {
     // Safely join the decoded path
     const relativePath = path.join(decodedSubPath, decodedDirectory, decodedFile)
     const absolutePath = path.join(rootDir, relativePath)
-    console.log(absolutePath)
 
     // check if the resulting path stays inside rootDir
     if (!isPathInside(absolutePath, rootDir)) {
@@ -30,7 +29,6 @@ router.route('/:subPath/:directory/:file').get((req, res) => {
         error: 'Invalid file path',
       })
     }
-
     // used for opening a file directly on browser
     return res.sendFile(absolutePath, (error) => {
       if (error) {
