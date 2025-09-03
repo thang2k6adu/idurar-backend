@@ -18,7 +18,8 @@
     "setup": "babel-node src/setup/setup.js",
     "upgrade": "node src/setup/upgrade.js",
     "reset": "babel-node src/setup/reset.js",
-    "test": "jest --config jest.config.mjs"
+    "test": "jest --config jest.config.mjs",
+    "start": "node ./build/src/server.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.859.0",
