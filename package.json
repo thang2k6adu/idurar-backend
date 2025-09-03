@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint src --ext js --report-unused-disable-directives --max-warnings 0",
     "clean": "rm -rf build && mkdir build",
-    "build-babel": "npx babel ./src -d ./build/src",
+    "build-babel": "babel ./src -d ./build/src",
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && cross-env NODE_ENV=production node ./build/src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/server.js",
@@ -19,7 +19,7 @@
     "upgrade": "node src/setup/upgrade.js",
     "reset": "babel-node src/setup/reset.js",
     "test": "jest --config jest.config.mjs",
-    "start": "node ./build/src/server.js"
+    "start": "npx babel-node ./build/src/server.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.859.0",
