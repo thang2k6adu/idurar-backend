@@ -15,7 +15,7 @@
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && cross-env NODE_ENV=production node ./build/src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/server.js",
-    "setup": "babel-node src/setup/setup.js",
+    "setup": "npx babel-node src/setup/setup.js",
     "upgrade": "node src/setup/upgrade.js",
     "reset": "babel-node src/setup/reset.js",
     "test": "jest --config jest.config.mjs",
