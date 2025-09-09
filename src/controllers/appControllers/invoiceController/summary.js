@@ -143,7 +143,8 @@ export const summary = async (req, res) => {
 
   let result = []
 
-  const totalInvoice = response[0].totalInvoice || { total: 0, count: 0 }
+  const totalInvoice =
+    response[0].totalInvoice && response[0].totalInvoice[0] ? response[0].totalInvoice[0] : { total: 0, count: 0 }
   const statusResult = response[0].statusCounts || []
   const paymentStatusResult = response[0].paymentStatusCounts || []
   const overdueResult = response[0].overdueCounts || []

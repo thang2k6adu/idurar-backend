@@ -38,6 +38,7 @@ export const summary = async (Model, req, res) => {
           {
             $match: {
               removed: false,
+              enabled: true,
               created: {
                 $gte: startDate.toDate(),
                 $lte: endDate.toDate(),
@@ -50,16 +51,17 @@ export const summary = async (Model, req, res) => {
         ],
         activeClients: [
           {
+            $match: {
+              removed: false,
+              enabled: true, // Thêm điều kiện này
+            },
+          },
+          {
             $lookup: {
               from: InvoiceModel.collection.name,
               localField: '_id',
               foreignField: 'client',
               as: 'invoice',
-            },
-          },
-          {
-            $match: {
-              'invoice.removed': false,
             },
           },
           {
@@ -80,14 +82,12 @@ export const summary = async (Model, req, res) => {
   const result = aggregationResult[0]
   const totalClients = result.totalClients[0] ? result.totalClients[0].count : 0
   const totalNewClients = result.newClients[0] ? result.newClients[0].count : 0
-  const activeClients = result.activeClients[0]
-    ? result.activeClients[0].count
-    : 0
+  const activeClients = result.activeClients[0] ? result.activeClients[0].count : 0
 
-  const totalActiveClientsPercentage =
-    totalClients > 0 ? (activeClients / totalClients) * 100 : 0
-  const totalNewClientsPercentage =
-    totalClients > 0 ? (totalNewClients / totalClients) * 100 : 0
+  console.log(result)
+
+  const totalActiveClientsPercentage = totalClients > 0 ? (activeClients / totalClients) * 100 : 0
+  const totalNewClientsPercentage = totalClients > 0 ? (totalNewClients / totalClients) * 100 : 0
 
   return res.status(200).json({
     success: true,
